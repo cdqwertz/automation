@@ -31,7 +31,7 @@ minetest.register_node("automation_machines:quarry", {
 		local inv = meta:get_inventory()
 		inv:set_size("main", 8*4)
 	end,
-	on_rotate = function(pos, from, force)
+	on_automation_rotate = function(pos, from, force)
 		if force > 200 then
 			local meta = minetest.get_meta(pos)
 			local deep = meta:get_int("deep") +1
@@ -61,7 +61,7 @@ minetest.register_node("automation_machines:harvester", {
 	tiles = {"automation_harvester.png", "automation_metal.png"},
 	groups = {choppy = 3},
 	sounds =  default.node_sound_stone_defaults(),
-	on_rotate = function(pos, from, force)
+	on_automation_rotate = function(pos, from, force)
 		if force > 100 then
 			for dx = -1, 1 do
 				for dz = -1, 1 do
@@ -112,8 +112,8 @@ minetest.register_node("automation_machines:crankshaft", {
 		local next_pos = vector.add(pos, dir)
 		local node = minetest.registered_nodes[minetest.get_node(next_pos).name]		
 
-		if node and node.on_rotate then
-			node.on_rotate(next_pos, pos, 50)
+		if node and node.on_automation_rotate then
+			node.on_automation_rotate(next_pos, pos, 50)
 		end
 	end,
 })
@@ -141,7 +141,7 @@ minetest.register_node("automation_machines:spring", {
 				{-0.2, -0.2, -0.5, 0.2, 0.2, 0.5},
 			},
 	},
-	on_rotate = function(pos, from, force)
+	on_automation_rotate = function(pos, from, force)
 		print("[automation] rotate spring")
 		local meta = minetest.get_meta(pos)
 		local f = meta:get_int("force") + force
@@ -151,8 +151,8 @@ minetest.register_node("automation_machines:spring", {
 			print(minetest.pos_to_string(next_pos))
 			local node = minetest.registered_nodes[minetest.get_node(next_pos).name]		
 
-			if node and node.on_rotate then
-				node.on_rotate(next_pos, pos, f)
+			if node and node.on_automation_rotate then
+				node.on_automation_rotate(next_pos, pos, f)
 				print("[automation] spring rotate")
 				f = 0
 			end
@@ -277,8 +277,8 @@ minetest.register_abm({
 				if not (dx == 0 and dz == 0) then
 					local p = {x = pos.x+dx, y=pos.y, z = pos.z+dz}
 					local n = minetest.registered_nodes[minetest.get_node(p).name]
-					if n and n.on_rotate then
-						n.on_rotate(p, pos, 220)
+					if n and n.on_automation_rotate then
+						n.on_automation_rotate(p, pos, 220)
 					end
 				end
 			end
@@ -302,15 +302,15 @@ minetest.register_node("automation_machines:axle", {
 				{-0.1, -0.1, -0.5, 0.1, 0.1, 0.5},
 			},
 	},
-	on_rotate = function(pos, from, force)
+	on_automation_rotate = function(pos, from, force)
 		print("[automation] rotate")
 		local dir = vector.multiply(vector.subtract(from,pos), -1)
 		local next_pos = vector.add(pos, dir)
 		print(minetest.pos_to_string(next_pos))
 		local node = minetest.registered_nodes[minetest.get_node(next_pos).name]		
 
-		if node and node.on_rotate then
-			node.on_rotate(next_pos, pos, force)
+		if node and node.on_automation_rotate then
+			node.on_automation_rotate(next_pos, pos, force)
 		end
 	end,
 })
