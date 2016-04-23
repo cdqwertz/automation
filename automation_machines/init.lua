@@ -69,13 +69,25 @@ minetest.register_node("automation_machines:harvester", {
 						local p = {x = pos.x+dx, y=pos.y, z = pos.z+dz}
 						local n = minetest.get_node(p).name
 						if n == "air" then
-							
+							minetest.set_node(p, {name = "default:sapling"})
 						else
-							
 						end
 					end
 				end
 			end
+			
+			for kx = -5, 5 do
+				for ky = 0, 5 do
+					for kz = -5, 5 do
+						local k = {x = pos.x+kx, y=pos.y+ky, z = pos.z+kz}
+						local n = minetest.get_node(k).name
+						if n and n== "default:tree" then
+							minetest.set_node(k, {name = "air"})
+						end
+					end
+				end
+			end
+
 		end
 	end,
 })
