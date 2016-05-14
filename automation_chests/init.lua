@@ -25,6 +25,40 @@ minetest.register_node("automation_chests:metal_chest", {
 		local inv = meta:get_inventory()
 		return inv:is_empty("main")
 	end,
+
+	on_automation_rotate = function(pos, from, force)
+		if force > 100 then
+			local meta = minetest.get_meta(pos)
+			local inv = meta:get_inventory()
+			for i = 1, inv:get_size("main") do
+				local stack = inv:get_stack("main", i)
+				if not stack:is_empty() then
+					local p = {	x = pos.x,
+							y = pos.y + 1, 
+							z = pos.z,
+						  }
+					minetest.spawn_item(p, stack)
+					stack:clear()
+					inv:set_stack("main", i, stack)
+				end
+			end
+		elseif force > 10 then
+			local meta = minetest.get_meta(pos)
+			local inv = meta:get_inventory()
+			for i = 1, inv:get_size("main") do
+				local stack = inv:get_stack("main", i)
+				if not stack:is_empty() then
+					local p = {	x = pos.x,
+							y = pos.y + 1, 
+							z = pos.z,
+						  }
+					minetest.spawn_item(p, stack:take_item())
+					inv:set_stack("main", i, stack)
+					break
+				end
+			end
+		end
+	end
 })
 
 minetest.register_craft({

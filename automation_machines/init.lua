@@ -130,7 +130,7 @@ minetest.register_craft({
 minetest.register_node("automation_machines:spring", {
 	description = "Spring",
 	tiles = {"automation_metal.png"},
-	groups = {choppy = 3},
+	groups = {choppy = 3, spring = 1},
 	sounds =  default.node_sound_glass_defaults(),
 	paramtype = "light",
 	paramtype2 = "facedir",
@@ -291,7 +291,7 @@ minetest.register_abm({
 minetest.register_node("automation_machines:axle", {
 	description = "Axle",
 	tiles = {"automation_metal.png"},
-	groups = {choppy = 3},
+	groups = {choppy = 3, axle = 1},
 	sounds =  default.node_sound_stone_defaults(),
 	paramtype = "light",
 	paramtype2 = "facedir",
@@ -303,6 +303,9 @@ minetest.register_node("automation_machines:axle", {
 			},
 	},
 	on_automation_rotate = function(pos, from, force)
+		if force < 1 then
+			return
+		end
 		print("[automation] rotate")
 		local dir = vector.multiply(vector.subtract(from,pos), -1)
 		local next_pos = vector.add(pos, dir)
@@ -311,6 +314,54 @@ minetest.register_node("automation_machines:axle", {
 
 		if node and node.on_automation_rotate then
 			node.on_automation_rotate(next_pos, pos, force)
+		end
+	end,
+})
+
+-- bevel gear
+
+minetest.register_node("automation_machines:bevel_gear", {
+	description = "Bevel Gear",
+	tiles = {"automation_metal.png"},
+	groups = {choppy = 3, gear= 1},
+	sounds =  default.node_sound_stone_defaults(),
+	paramtype = "light",
+	drawtype = "nodebox",
+	node_box = {
+		type = "connected",
+		fixed = {{-0.2, -0.2, -0.2, 0.2, 0.2, 0.2},},
+		
+		connect_back = {{-0.1, -0.1, 0, 0.1, 0.1, 0.5}},
+		connect_left = {{-0.5, -0.1, -0.1, 0, 0.1, 0.1}},
+		connect_front = {{-0.1, -0.1, -0.5, 0.1, 0.1, 0}},
+		connect_right = {{-0.0, -0.1, -0.1, 0.5, 0.1, 0.1}},
+	},
+	connects_to = {"group:axle", "group:gear", "group:spring"},
+
+	on_automation_rotate = function(pos, from, force)
+		print("[automation] rotate")
+		local dirs = {vector.new(0, 0, 1), vector.new(0, 0, -1), vector.new(1, 0, 0), vector.new(-1, 0, 0)}
+		local n = 0
+		for _,dir in pairs(dirs) do
+			local next_pos = vector.add(pos, dir)
+			if not(vector.equals(next_pos, from)) then
+				local node = minetest.registered_nodes[minetest.get_node(next_pos).name]		
+
+				if node and node.on_automation_rotate then
+					n = n +1;
+				end
+			end
+		end
+
+		for _,dir in pairs(dirs) do
+			local next_pos = vector.add(pos, dir)
+			if not(vector.equals(next_pos, from)) then
+				local node = minetest.registered_nodes[minetest.get_node(next_pos).name]		
+
+				if node and node.on_automation_rotate then
+					node.on_automation_rotate(next_pos, pos, force/n)
+				end
+			end
 		end
 	end,
 })
