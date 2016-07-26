@@ -92,8 +92,8 @@ minetest.register_node("automation_machines:harvester", {
 	end,
 })
 
-minetest.register_node("automation_machines:crankshaft", {
-	description = "Crankshaft",
+minetest.register_node("automation_machines:crank", {
+	description = "Crank",
 	tiles = {"automation_metal.png"},
 	groups = {choppy = 3},
 	sounds =  default.node_sound_stone_defaults(),
@@ -119,7 +119,7 @@ minetest.register_node("automation_machines:crankshaft", {
 })
 
 minetest.register_craft({
-	output = 'automation_machines:crankshaft',
+	output = 'automation_machines:crank',
 	recipe = {
 		{'default:steel_ingot', '', ''},
 		{'default:steel_ingot', 'automation_machines:axle', 'automation_machines:axle'},
