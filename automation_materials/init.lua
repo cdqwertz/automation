@@ -7,6 +7,13 @@ minetest.register_node("automation_materials:metal_block", {
 	sounds =  default.node_sound_stone_defaults(),
 })
 
+minetest.register_node("automation_materials:strong_metal_block", {
+	description = "Strong Metal Block",
+	tiles = {"automation_strong_metal.png"},
+	groups = {choppy = 1},
+	sounds =  default.node_sound_stone_defaults(),
+})
+
 minetest.register_node("automation_materials:glass", {
 	description = "Framed Glass",
 	tiles = {"automation_glass.png"},
@@ -20,6 +27,11 @@ minetest.register_node("automation_materials:glass", {
 minetest.register_craftitem("automation_materials:metal", {
 	description = "Metal",
 	inventory_image = "automation_metal.png",
+})
+
+minetest.register_craftitem("automation_materials:strong_metal", {
+	description = "Strong Metal",
+	inventory_image = "automation_strong_metal.png",
 })
 
 -- crafts
@@ -36,6 +48,22 @@ minetest.register_craft({
 	recipe = {
 		{'automation_materials:metal', 'automation_materials:metal', 'automation_materials:metal'},
 		{'automation_materials:metal', 'automation_materials:metal', 'automation_materials:metal'},
+	}
+})
+
+minetest.register_craft({
+	output = 'automation_materials:strong_metal',
+	recipe = {
+		{'automation_materials:metal', 'automation_materials:metal'},
+		{'automation_materials:metal', 'automation_materials:metal'},
+	}
+})
+
+minetest.register_craft({
+	output = 'automation_materials:strong_metal_block',
+	recipe = {
+		{'automation_materials:strong_metal', 'automation_materials:strong_metal', 'automation_materials:strong_metal'},
+		{'automation_materials:strong_metal', 'automation_materials:strong_metal', 'automation_materials:strong_metal'},
 	}
 })
 

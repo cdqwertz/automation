@@ -1,6 +1,6 @@
 minetest.register_node("automation_pistons:piston", {
 	description = "Piston",
-	tiles = {"automation_piston_top.png", "automation_piston_bottom.png","automation_piston_side.png"},
+	tiles = {"default_wood.png", "automation_strong_metal.png","default_wood.png^automation_piston_side.png"},
 	groups = {choppy = 3},
 	sounds =  default.node_sound_stone_defaults(),
 	paramtype2 = "facedir",
@@ -27,8 +27,8 @@ minetest.register_node("automation_pistons:piston", {
 
 minetest.register_node("automation_pistons:piston_on", {
 	description = "Piston (ON)",
-	tiles = {"automation_piston_bottom.png"},
-	groups = {choppy = 3},
+	tiles = {"automation_strong_metal.png"},
+	groups = {choppy = 3, not_in_creative_inventory = 1},
 	sounds =  default.node_sound_stone_defaults(),
 	paramtype2 = "facedir",
 	on_place = minetest.rotate_node,
@@ -49,8 +49,8 @@ minetest.register_node("automation_pistons:piston_on", {
 
 minetest.register_node("automation_pistons:piston_pusher", {
 	description = "Piston (Pusher)",
-	tiles = {"automation_piston_top.png"},
-	groups = {choppy = 3},
+	tiles = {"default_wood.png"},
+	groups = {choppy = 3, not_in_creative_inventory = 1},
 	sounds =  default.node_sound_stone_defaults(),
 	paramtype2 = "facedir",
 	paramtype = "light",
