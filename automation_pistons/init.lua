@@ -33,6 +33,8 @@ minetest.register_node("automation_pistons:piston_on", {
 	paramtype2 = "facedir",
 	on_place = minetest.rotate_node,
 
+	drop = "automation_pistons:piston",
+
 	on_automation_rotate = function(pos, from, force)
 		if force > 10 then
 			local node = minetest.get_node(pos)
@@ -60,4 +62,16 @@ minetest.register_node("automation_pistons:piston_pusher", {
 		type = "fixed",
 		fixed = {{-2/16, -0.5, -2/16, 2/16, 0.5, 2/16}, {-0.5, 6/16, -0.5, 0.5, 0.5, 0.5}},
 	},
+
+	drop = "",	
+})
+
+
+minetest.register_craft({
+	output = 'automation_pistons:piston',
+	recipe = {
+		{'group:wood', 'group:wood', 'group:wood'},
+		{'automation_materials:strong_metal', 'default:stick', 'automation_materials:strong_metal'},
+		{'automation_materials:strong_metal', 'automation_machines:boiler_empty', 'automation_materials:strong_metal'},
+	}
 })

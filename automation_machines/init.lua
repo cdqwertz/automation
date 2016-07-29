@@ -212,6 +212,8 @@ minetest.register_node("automation_machines:boiler", {
 	tiles = {"automation_boiler_top.png", "automation_boiler_top.png", "automation_boiler_side.png"},
 	groups = {choppy = 3},
 	sounds =  default.node_sound_stone_defaults(),
+
+	drop = "automation_machines:boiler_empty",
 })
 
 minetest.register_node("automation_machines:boiler_active", {
@@ -219,6 +221,8 @@ minetest.register_node("automation_machines:boiler_active", {
 	tiles = {"automation_boiler_top.png", "automation_boiler_top.png", "automation_boiler_side_active.png"},
 	groups = {choppy = 3},
 	sounds =  default.node_sound_stone_defaults(),
+
+	drop = "automation_machines:boiler_empty",
 })
 
 minetest.register_abm({
