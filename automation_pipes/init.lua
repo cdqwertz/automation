@@ -35,6 +35,15 @@ minetest.register_node("automation_pipes:pipe", {
 	end,
 })
 
+minetest.register_craft({
+	output = 'automation_pipes:pipe 6',
+	recipe = {
+		{'default:glass', 'default:glass', 'default:glass'},
+		{'', '', ''},
+		{'default:glass', 'default:glass', 'default:glass'},
+	}
+})
+
 minetest.register_node("automation_pipes:pipe_water", {
 	description = "Pipe with Water",
 	tiles = {"automation_pipe_water.png"},
@@ -133,4 +142,13 @@ minetest.register_node("automation_pipes:pump", {
 			end
 		end
 	end,
+})
+
+minetest.register_craft({
+	output = 'automation_pipes:pump',
+	recipe = {
+		{'automation_materials:metal', 'automation_materials:metal', 'automation_materials:metal'},
+		{'automation_materials:metal', 'automation_pistons:piston', 'automation_materials:metal'},
+		{'automation_materials:metal', 'automation_pipes:pipe', 'automation_materials:metal'},
+	}
 })
