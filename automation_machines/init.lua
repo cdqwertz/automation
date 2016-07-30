@@ -23,7 +23,7 @@ local inv_formspec = inv_formspec .. default.get_hotbar_bg(0,4.85)
 minetest.register_node("automation_machines:quarry", {
 	description = "Quarry",
 	tiles = {"automation_metal.png", "automation_metal.png", "automation_quarry.png"},
-	groups = {choppy = 3},
+	groups = {choppy = 3, machine=1},
 	sounds =  default.node_sound_stone_defaults(),
 	on_construct = function(pos)
 		local meta = minetest.get_meta(pos)
@@ -59,7 +59,7 @@ minetest.register_craft({
 minetest.register_node("automation_machines:harvester", {
 	description = "Harvester",
 	tiles = {"automation_harvester.png", "automation_metal.png"},
-	groups = {choppy = 3},
+	groups = {choppy = 3, machine=1},
 	sounds =  default.node_sound_stone_defaults(),
 	on_automation_rotate = function(pos, from, force)
 		if force > 100 then
@@ -173,12 +173,22 @@ minetest.register_craft({
 minetest.register_node("automation_machines:boiler_empty", {
 	description = "Boiler",
 	tiles = {"automation_boiler_top.png", "automation_boiler_top.png", "automation_boiler_side_empty.png"},
-	groups = {choppy = 3},
+	groups = {choppy = 3, connects_to_pipe = 1},
 	sounds =  default.node_sound_stone_defaults(),
 	on_construct = function(pos)
 		local meta = minetest.get_meta(pos)
 		meta:set_int("water", 0)
 		meta:set_string("infotext", "Water : 0")
+	end,
+
+	on_automation_pipe_update = function(pos, from, fluid)	
+		if fluid == 1 then
+			swap_node(pos, "automation_machines:boiler")
+
+			local meta = minetest.get_meta(pos)
+			meta:set_int("water", 100)
+			meta:set_string("infotext", "Water : 100")
+		end
 	end,
 
 	on_punch = function(pos, node, puncher, pointed_thing)
@@ -210,8 +220,16 @@ minetest.register_craft({
 minetest.register_node("automation_machines:boiler", {
 	description = "Boiler",
 	tiles = {"automation_boiler_top.png", "automation_boiler_top.png", "automation_boiler_side.png"},
-	groups = {choppy = 3},
+	groups = {choppy = 3,connects_to_pipe = 1},
 	sounds =  default.node_sound_stone_defaults(),
+
+	on_automation_pipe_update = function(pos, from, fluid)	
+		if fluid == 1 then
+			local meta = minetest.get_meta(pos)
+			meta:set_int("water", 100)
+			meta:set_string("infotext", "Water : 100")
+		end
+	end,
 
 	drop = "automation_machines:boiler_empty",
 })
@@ -219,8 +237,16 @@ minetest.register_node("automation_machines:boiler", {
 minetest.register_node("automation_machines:boiler_active", {
 	description = "Boiler",
 	tiles = {"automation_boiler_top.png", "automation_boiler_top.png", "automation_boiler_side_active.png"},
-	groups = {choppy = 3},
+	groups = {choppy = 3, connects_to_pipe = 1},
 	sounds =  default.node_sound_stone_defaults(),
+
+	on_automation_pipe_update = function(pos, from, fluid)	
+		if fluid == 1 then
+			local meta = minetest.get_meta(pos)
+			meta:set_int("water", 100)
+			meta:set_string("infotext", "Water : 100")
+		end
+	end,
 
 	drop = "automation_machines:boiler_empty",
 })
@@ -239,7 +265,7 @@ minetest.register_abm({
 minetest.register_node("automation_machines:steam_engine", {
 	description = "Steam Engine",
 	tiles = {"automation_metal.png", "automation_metal.png", "automation_steam_engine.png"},
-	groups = {choppy = 3},
+	groups = {choppy = 3, machine=1},
 	sounds =  default.node_sound_stone_defaults(),
 })
 
@@ -317,7 +343,7 @@ minetest.register_node("automation_machines:axle", {
 		local node = minetest.registered_nodes[minetest.get_node(next_pos).name]		
 
 		if node and node.on_automation_rotate then
-			node.on_automation_rotate(next_pos, pos, force)
+			node.on_automation_rotate(next_pos, pos, force-1)
 		end
 	end,
 })
@@ -340,7 +366,7 @@ minetest.register_node("automation_machines:bevel_gear", {
 		connect_front = {{-0.1, -0.1, -0.5, 0.1, 0.1, 0}},
 		connect_right = {{-0.0, -0.1, -0.1, 0.5, 0.1, 0.1}},
 	},
-	connects_to = {"group:axle", "group:gear", "group:spring"},
+	connects_to = {"group:axle", "group:gear", "group:spring", "group:machine", "automation_machines:crank"},
 
 	on_automation_rotate = function(pos, from, force)
 		print("[automation] rotate")
