@@ -272,9 +272,9 @@ minetest.register_node("automation_machines:steam_engine", {
 minetest.register_craft({
 	output = 'automation_machines:steam_engine',
 	recipe = {
-		{'', '', 'default:steel_ingot'},
-		{'automation_machines:boiler_empty', 'automation_machines:axle', 'default:steel_ingot'},
-		{'', '', 'default:steel_ingot'},
+		{'automation_materials:metal', 'automation_materials:metal', 'automation_materials:metal'},
+		{'automation_pipes:pipe', 'automation_pistons:piston', 'automation_machines:axle'},
+		{'automation_materials:metal', 'automation_materials:metal', 'automation_materials:metal'},
 	}
 })
 

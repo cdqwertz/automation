@@ -2,7 +2,7 @@ minetest.register_node("automation_pipes:pipe", {
 	description = "Pipe",
 	tiles = {"automation_pipe.png"},
 	groups = {choppy = 3, pipe = 1},
-	sounds =  default.node_sound_stone_defaults(),
+	sounds =  default.node_sound_glass_defaults(),
 	paramtype = "light",
 	drawtype = "nodebox",
 	node_box = {
@@ -48,7 +48,7 @@ minetest.register_node("automation_pipes:pipe_water", {
 	description = "Pipe with Water",
 	tiles = {"automation_pipe_water.png"},
 	groups = {choppy = 3, pipe = 1},
-	sounds =  default.node_sound_stone_defaults(),
+	sounds =  default.node_sound_glass_defaults(),
 	paramtype = "light",
 	drawtype = "nodebox",
 	node_box = {

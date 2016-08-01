@@ -1,7 +1,7 @@
 minetest.register_node("automation_item_transport:fan", {
 	description = "Fan",
 	tiles = {"automation_metal.png", "automation_metal.png", "automation_metal.png", "automation_metal.png", "automation_metal.png", "automation_fan.png"},
-	groups = {choppy = 3},
+	groups = {choppy = 3, machine = 1},
 	sounds =  default.node_sound_stone_defaults(),
 	paramtype2 = "facedir",
 	on_automation_rotate = function(pos, from, force)
@@ -43,6 +43,15 @@ minetest.register_node("automation_item_transport:fan", {
 	end,
 })
 
+minetest.register_craft({
+	output = 'automation_item_transport:fan',
+	recipe = {
+		{'automation_materials:metal', 'automation_materials:metal', 'default:steel_ingot'},
+		{'automation_materials:metal', 'automation_machines:axle', 'default:steel_ingot'},
+		{'automation_materials:metal', 'automation_materials:metal', 'default:steel_ingot'},
+	}
+})
+
 minetest.register_node("automation_item_transport:slime_block", {
 	description = "Slime Block",
 	tiles = {"automation_slime.png"},
@@ -63,4 +72,20 @@ minetest.register_node("automation_item_transport:slime_carpet", {
 	paramtype = "light",
 	groups = {crumbly = 3, bouncy=75, fall_damage_add_percent=-100},
 	sounds =  default.node_sound_dirt_defaults(),
+})
+
+minetest.register_node("automation_item_transport:magent", {
+	description = "Magnet",
+	tiles = {"automation_magnet_top.png", "automation_magnet_bottom.png", "automation_magnet_side.png"},
+	groups = {choppy = 3, machine = 1},
+	sounds =  default.node_sound_stone_defaults(),
+
+	on_automation_rotate = function(pos, from, force)
+		if force > 90 then
+			local objs = minetest.get_objects_inside_radius(pos, 4)
+			for _,obj in ipairs(objs) do
+				obj:moveto(vector.add(pos, vector.new(0, 1, 0)), false)
+			end
+		end
+	end,
 })

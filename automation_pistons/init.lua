@@ -14,9 +14,12 @@ minetest.register_node("automation_pistons:piston", {
 			if minetest.get_node(vector.add(pos, vector.multiply(d,2))).name == "air" or minetest.get_node(vector.add(pos, d)).name == "air" then
 				node.name = "automation_pistons:piston_on"
 				minetest.swap_node(pos, node)
+
+				local meta = minetest.get_meta(vector.add(pos, d)):to_table()
 	
 				if not(minetest.get_node(vector.add(pos, d)).name == "air") then
 					minetest.set_node(vector.add(pos, vector.multiply(d,2)), minetest.get_node(vector.add(pos, d)))
+					minetest.get_meta(vector.add(pos, vector.multiply(d,2))):from_table(meta)
 				end
 
 				minetest.set_node(vector.add(pos, d), {name = "automation_pistons:piston_pusher", param2 = node.param2})
