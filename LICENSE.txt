@@ -23,4 +23,4 @@ http://www.gnu.org/licenses/lgpl-2.1.html
 License for Media
 -----------------
 
-CC-BY-SA 3.0 UNPORTED. Created by cd2 (cdqwertz)
+CC-BY-SA 3.0 UNPORTED. Created by cdqwertz

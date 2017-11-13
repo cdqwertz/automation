@@ -8,7 +8,7 @@ minetest.register_node("automation_pipes:pipe", {
 	node_box = {
 		type = "connected",
 		fixed = {{-4/16, -4/16, -4/16, 4/16, 4/16, 4/16},},
-		
+
 		connect_back = {{-4/16, -4/16, -4/16, 4/16, 4/16, 0.5}},
 		connect_left = {{-0.5, -4/16, -4/16, 4/16, 4/16, 4/16}},
 		connect_front = {{-4/16, -4/16, -0.5, 4/16, 4/16, 4/16}},
@@ -25,7 +25,7 @@ minetest.register_node("automation_pipes:pipe", {
 		for _,dir in pairs(dirs) do
 			local next_pos = vector.add(pos, dir)
 			if not(vector.equals(next_pos, from)) then
-				local node = minetest.registered_nodes[minetest.get_node(next_pos).name]		
+				local node = minetest.registered_nodes[minetest.get_node(next_pos).name]
 
 				if node and node.on_automation_pipe_update then
 					node.on_automation_pipe_update(next_pos, pos, fluid)
@@ -54,7 +54,7 @@ minetest.register_node("automation_pipes:pipe_water", {
 	node_box = {
 		type = "connected",
 		fixed = {{-4/16, -4/16, -4/16, 4/16, 4/16, 4/16},},
-		
+
 		connect_back = {{-4/16, -4/16, -4/16, 4/16, 4/16, 0.5}},
 		connect_left = {{-0.5, -4/16, -4/16, 4/16, 4/16, 4/16}},
 		connect_front = {{-4/16, -4/16, -0.5, 4/16, 4/16, 4/16}},
@@ -73,7 +73,7 @@ minetest.register_node("automation_pipes:pipe_water", {
 		for _,dir in pairs(dirs) do
 			local next_pos = vector.add(pos, dir)
 			if not(vector.equals(next_pos, from)) then
-				local node = minetest.registered_nodes[minetest.get_node(next_pos).name]		
+				local node = minetest.registered_nodes[minetest.get_node(next_pos).name]
 
 				if node and node.on_automation_pipe_update then
 					node.on_automation_pipe_update(next_pos, pos, fluid)
@@ -106,7 +106,7 @@ minetest.register_node("automation_pipes:pump", {
 	on_automation_rotate = function(pos, from, force)
 		if force > 100 then
 			local fluid = 0
-			
+
 			if minetest.get_node(vector.new(pos.x, pos.y-1, pos.z)).name == "default:water_source" then
 				fluid = 1
 			end
@@ -115,7 +115,7 @@ minetest.register_node("automation_pipes:pump", {
 			for _,dir in pairs(dirs) do
 				local next_pos = vector.add(pos, dir)
 				if not(vector.equals(next_pos, from)) then
-					local node = minetest.registered_nodes[minetest.get_node(next_pos).name]		
+					local node = minetest.registered_nodes[minetest.get_node(next_pos).name]
 
 					if node and node.on_automation_pipe_update then
 						node.on_automation_pipe_update(next_pos, pos, fluid)
@@ -134,7 +134,7 @@ minetest.register_node("automation_pipes:pump", {
 		for _,dir in pairs(dirs) do
 			local next_pos = vector.add(pos, dir)
 			if not(vector.equals(next_pos, from)) then
-				local node = minetest.registered_nodes[minetest.get_node(next_pos).name]		
+				local node = minetest.registered_nodes[minetest.get_node(next_pos).name]
 
 				if node and node.on_automation_pipe_update then
 					node.on_automation_pipe_update(next_pos, pos, fluid)

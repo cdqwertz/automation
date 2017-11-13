@@ -75,7 +75,7 @@ minetest.register_node("automation_machines:harvester", {
 					end
 				end
 			end
-			
+
 			for kx = -5, 5 do
 				for ky = 0, 5 do
 					for kz = -5, 5 do
@@ -110,7 +110,7 @@ minetest.register_node("automation_machines:crank", {
 	on_punch = function(pos, player, pt)
 		local dir = minetest.facedir_to_dir(minetest.get_node({x = pos.x, y= pos.y, z=pos.z}).param2)
 		local next_pos = vector.add(pos, dir)
-		local node = minetest.registered_nodes[minetest.get_node(next_pos).name]		
+		local node = minetest.registered_nodes[minetest.get_node(next_pos).name]
 
 		if node and node.on_automation_rotate then
 			node.on_automation_rotate(next_pos, pos, 50)
@@ -149,7 +149,7 @@ minetest.register_node("automation_machines:spring", {
 			local dir = vector.multiply(vector.subtract(from,pos), -1)
 			local next_pos = vector.add(pos, dir)
 			print(minetest.pos_to_string(next_pos))
-			local node = minetest.registered_nodes[minetest.get_node(next_pos).name]		
+			local node = minetest.registered_nodes[minetest.get_node(next_pos).name]
 
 			if node and node.on_automation_rotate then
 				node.on_automation_rotate(next_pos, pos, f)
@@ -181,7 +181,7 @@ minetest.register_node("automation_machines:boiler_empty", {
 		meta:set_string("infotext", "Water : 0")
 	end,
 
-	on_automation_pipe_update = function(pos, from, fluid)	
+	on_automation_pipe_update = function(pos, from, fluid)
 		if fluid == 1 then
 			swap_node(pos, "automation_machines:boiler")
 
@@ -195,11 +195,11 @@ minetest.register_node("automation_machines:boiler_empty", {
 		local wielded_item = puncher:get_wielded_item():get_name()
 		if wielded_item == "bucket:bucket_water" then
 			swap_node(pos, "automation_machines:boiler")
-	
+
 			local meta = minetest.get_meta(pos)
 			meta:set_int("water", 100)
 			meta:set_string("infotext", "Water : 100")
-	
+
 			local w = puncher:get_wielded_item()
 			w:take_item(1)
 			puncher:set_wielded_item(w)
@@ -223,7 +223,7 @@ minetest.register_node("automation_machines:boiler", {
 	groups = {choppy = 3,connects_to_pipe = 1},
 	sounds =  default.node_sound_stone_defaults(),
 
-	on_automation_pipe_update = function(pos, from, fluid)	
+	on_automation_pipe_update = function(pos, from, fluid)
 		if fluid == 1 then
 			local meta = minetest.get_meta(pos)
 			meta:set_int("water", 100)
@@ -240,7 +240,7 @@ minetest.register_node("automation_machines:boiler_active", {
 	groups = {choppy = 3, connects_to_pipe = 1},
 	sounds =  default.node_sound_stone_defaults(),
 
-	on_automation_pipe_update = function(pos, from, fluid)	
+	on_automation_pipe_update = function(pos, from, fluid)
 		if fluid == 1 then
 			local meta = minetest.get_meta(pos)
 			meta:set_int("water", 100)
@@ -340,12 +340,19 @@ minetest.register_node("automation_machines:axle", {
 		local dir = vector.multiply(vector.subtract(from,pos), -1)
 		local next_pos = vector.add(pos, dir)
 		print(minetest.pos_to_string(next_pos))
-		local node = minetest.registered_nodes[minetest.get_node(next_pos).name]		
+		local node = minetest.registered_nodes[minetest.get_node(next_pos).name]
 
 		if node and node.on_automation_rotate then
 			node.on_automation_rotate(next_pos, pos, force-1)
 		end
 	end,
+})
+
+minetest.register_craft({
+	output = 'automation_machines:axle',
+	recipe = {
+		{'default:steel_ingot', 'default:steel_ingot', 'default:steel_ingot'},
+	}
 })
 
 -- bevel gear
@@ -360,7 +367,7 @@ minetest.register_node("automation_machines:bevel_gear", {
 	node_box = {
 		type = "connected",
 		fixed = {{-0.2, -0.2, -0.2, 0.2, 0.2, 0.2},},
-		
+
 		connect_back = {{-0.1, -0.1, 0, 0.1, 0.1, 0.5}},
 		connect_left = {{-0.5, -0.1, -0.1, 0, 0.1, 0.1}},
 		connect_front = {{-0.1, -0.1, -0.5, 0.1, 0.1, 0}},
@@ -375,7 +382,7 @@ minetest.register_node("automation_machines:bevel_gear", {
 		for _,dir in pairs(dirs) do
 			local next_pos = vector.add(pos, dir)
 			if not(vector.equals(next_pos, from)) then
-				local node = minetest.registered_nodes[minetest.get_node(next_pos).name]		
+				local node = minetest.registered_nodes[minetest.get_node(next_pos).name]
 
 				if node and node.on_automation_rotate then
 					n = n +1;
@@ -386,7 +393,7 @@ minetest.register_node("automation_machines:bevel_gear", {
 		for _,dir in pairs(dirs) do
 			local next_pos = vector.add(pos, dir)
 			if not(vector.equals(next_pos, from)) then
-				local node = minetest.registered_nodes[minetest.get_node(next_pos).name]		
+				local node = minetest.registered_nodes[minetest.get_node(next_pos).name]
 
 				if node and node.on_automation_rotate then
 					node.on_automation_rotate(next_pos, pos, force/n)
@@ -397,8 +404,8 @@ minetest.register_node("automation_machines:bevel_gear", {
 })
 
 minetest.register_craft({
-	output = 'automation_machines:axle',
+	output = 'automation_machines:bevel_gear',
 	recipe = {
-		{'default:steel_ingot', 'default:steel_ingot', 'default:steel_ingot'},
+		{'automation_machines:axle'}
 	}
 })

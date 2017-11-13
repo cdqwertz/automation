@@ -9,14 +9,14 @@ minetest.register_node("automation_pistons:piston", {
 	on_automation_rotate = function(pos, from, force)
 		if force > 40 then
 			local node = minetest.get_node(pos)
-			local a = {vector.new(0, 1, 0), vector.new(0, 0, 1), vector.new(0, 0, -1), vector.new(1,0,0), vector.new(-1,0,0), vector.new(-1,0, 0)}			
+			local a = {vector.new(0, 1, 0), vector.new(0, 0, 1), vector.new(0, 0, -1), vector.new(1,0,0), vector.new(-1,0,0), vector.new(-1,0, 0)}
 			local d = a[math.floor(node.param2/4)+1]
 			if minetest.get_node(vector.add(pos, vector.multiply(d,2))).name == "air" or minetest.get_node(vector.add(pos, d)).name == "air" then
 				node.name = "automation_pistons:piston_on"
 				minetest.swap_node(pos, node)
 
 				local meta = minetest.get_meta(vector.add(pos, d)):to_table()
-	
+
 				if not(minetest.get_node(vector.add(pos, d)).name == "air") then
 					minetest.set_node(vector.add(pos, vector.multiply(d,2)), minetest.get_node(vector.add(pos, d)))
 					minetest.get_meta(vector.add(pos, vector.multiply(d,2))):from_table(meta)
@@ -41,7 +41,7 @@ minetest.register_node("automation_pistons:piston_on", {
 	on_automation_rotate = function(pos, from, force)
 		if force > 40 then
 			local node = minetest.get_node(pos)
-			local a = {vector.new(0, 1, 0), vector.new(0, 0, 1), vector.new(0, 0, -1), vector.new(1,0,0), vector.new(-1,0,0), vector.new(-1,0, 0)}			
+			local a = {vector.new(0, 1, 0), vector.new(0, 0, 1), vector.new(0, 0, -1), vector.new(1,0,0), vector.new(-1,0,0), vector.new(-1,0, 0)}
 			local d = a[math.floor(node.param2/4)+1]
 
 			node.name = "automation_pistons:piston"
@@ -66,7 +66,7 @@ minetest.register_node("automation_pistons:piston_pusher", {
 		fixed = {{-2/16, -0.5, -2/16, 2/16, 0.5, 2/16}, {-0.5, 6/16, -0.5, 0.5, 0.5, 0.5}},
 	},
 
-	drop = "",	
+	drop = "",
 })
 
 
