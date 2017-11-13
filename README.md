@@ -1,8 +1,8 @@
-#Automation
+# Automation
 This mod adds some machines to minetest.
 
-##License
+## License
 See License.txt
 
-##Created by
+## Created by
 cd2 (cdqwertz)

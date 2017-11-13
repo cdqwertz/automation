@@ -17,6 +17,13 @@ function automation_crusher.register_dust(def)
 	})
 end
 
+function automation_crusher.register_craft (def)
+	automation_crusher.crafts[#automation_crusher.crafts+1] = {
+		output = def.output,
+		input = def.input
+	}
+end
+
 
 automation_crusher.register_dust({
 	name = "automation_crusher:dust_gold",
@@ -32,10 +39,19 @@ automation_crusher.register_dust({
 	description = "Iron Dust",
 	img = "automation_dust_iron.png",
 	material = "default:iron_lump",
-	
+
 	ingot = "default:steel_ingot"
 })
 
+automation_crusher.register_craft({
+	input = "default:cobble",
+	output = "default:gravel"
+})
+
+automation_crusher.register_craft({
+	input = "default:gravel",
+	output = "default:sand"
+})
 
 local crusher_formspec = "size[8,8]"
 local crusher_formspec = crusher_formspec .. default.gui_bg
@@ -78,7 +94,7 @@ minetest.register_node("automation_crusher:crusher", {
 		if force > 200 then
 			local meta = minetest.get_meta(pos)
 			local inv = meta:get_inventory()
-			
+
 			for i=1,#automation_crusher.crafts do
 				if inv:contains_item("main", automation_crusher.crafts[i].input) then
 					inv:remove_item("main", automation_crusher.crafts[i].input)
