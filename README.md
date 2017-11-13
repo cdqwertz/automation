@@ -5,4 +5,4 @@ This mod adds some machines to minetest.
 See License.txt
 
 ## Created by
-cd2 (cdqwertz)
+cdqwertz
