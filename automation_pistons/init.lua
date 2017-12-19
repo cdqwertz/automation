@@ -23,6 +23,7 @@ minetest.register_node("automation_pistons:piston", {
 				end
 
 				minetest.set_node(vector.add(pos, d), {name = "automation_pistons:piston_pusher", param2 = node.param2})
+				minetest.check_for_falling(vector.add(pos, vector.multiply(d, 2)))
 			end
 		end
 	end,
@@ -30,7 +31,13 @@ minetest.register_node("automation_pistons:piston", {
 
 minetest.register_node("automation_pistons:piston_on", {
 	description = "Piston (ON)",
-	tiles = {"automation_strong_metal.png"},
+	tiles = {"automation_strong_metal.png", "automation_strong_metal.png","default_wood.png^automation_piston_side.png"},
+	drawtype = "nodebox",
+	node_box = {
+		type = "fixed",
+		fixed = {{-2/16, 5/16, -2/16, 2/16, 0.5, 2/16}, {-0.5, -0.5, -0.5, 0.5, 5/16, 0.5}},
+	},
+
 	groups = {choppy = 3, not_in_creative_inventory = 1 , machine=1},
 	sounds =  default.node_sound_stone_defaults(),
 	paramtype2 = "facedir",
@@ -48,6 +55,7 @@ minetest.register_node("automation_pistons:piston_on", {
 			minetest.swap_node(pos, node)
 
 			minetest.set_node(vector.add(pos, d), {name = "air"})
+			minetest.check_for_falling(vector.add(pos, vector.multiply(d, 2)))
 		end
 	end,
 })
